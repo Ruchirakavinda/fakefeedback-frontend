@@ -89,7 +89,7 @@ function HeroForm() {
             <div className="col-span-4">
               <button
                 type="button"
-                class="text-sm font-semibold leading-6 bg-[#000000] w-[100%] h-[36px] text-[#ffffff]"
+                class="text-sm font-semibold leading-6 bg-gray-500 w-[100%] h-[36px] text-[#ffffff]"
                 onClick={handleButtonClick}
               >
                 Upload Image
