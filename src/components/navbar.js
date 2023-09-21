@@ -69,15 +69,15 @@ export default function Navbar() {
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
-                      {navigation.map((item) => (
+                      {navigation.map((item) =>  (
                         <a
                           key={item.name}
                           href={item.href}
                           className={classNames(
                             item.current
-                              ? "text-black underline font-bold	 "
-                              : "text-black ",
-                            "rounded-md px-3 py-2 text-md hover:underline"
+                              ? "text-black underline underline-offset-4 font-bold"
+                              : "text-black underline-offset-4",
+                            "rounded-md px-3 py-2 text-md hover:underline underline-offset-4"
                           )}
                           aria-current={item.current ? "page" : undefined}
                         >
