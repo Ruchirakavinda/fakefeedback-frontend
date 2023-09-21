@@ -12,7 +12,7 @@ export default function Review() {
           small .it canbe used for beautiful decors
         </p>
 
-        <div className="grid grid-cols-6 gap-5  pb-10">
+        <div className="grid grid-cols-6 gap-5  py-2">
           <div>
             <img
               className="h-8 w-full h-auto"
