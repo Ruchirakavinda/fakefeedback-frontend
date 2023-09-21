@@ -5,11 +5,33 @@ import {
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
 function HeroForm() {
+  const fileInputRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [openTwo, setOpenTwo] = useState(false);
   const [done, setDone] = useState(true);
 
   const cancelButtonRef = useRef(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [base64Image, setBase64Image] = useState("");
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedImage(file);
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64 = event.target.result;
+        setBase64Image(base64);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleButtonClick = () => {
+    // Trigger a click event on the hidden file input when the button is clicked
+    fileInputRef.current.click();
+  };
 
   const handleSubmit = () => {
     if (done) {
@@ -17,12 +39,13 @@ function HeroForm() {
     } else {
       setOpenTwo(true);
     }
+    console.log("image string : ", base64Image);
   };
 
   return (
     <>
-      <div className="mx-auto max-w-7xl flex w-full py-20 items-center border-b-2 border-[#DCDCDC]">
-        <div className=" w-[40%]  p-2 ">
+      <div className="mx-auto max-w-7xl flex w-full py-20 items-start border-b-2 border-[#DCDCDC]">
+        <div className=" w-[40%]  pt-10  ">
           <div className="text-[32px] w-[70%] text-left font-semibold leading-[40px] pb-5">
             Havic HV G-92 Gamepad
           </div>
@@ -67,9 +90,24 @@ function HeroForm() {
               <button
                 type="button"
                 class="text-sm font-semibold leading-6 bg-[#000000] w-[100%] h-[36px] text-[#ffffff]"
+                onClick={handleButtonClick}
               >
                 Upload Image
               </button>
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                ref={fileInputRef}
+                onChange={handleImageChange}
+              />
+              {base64Image ? (
+                <div className="w-50 mt-5">
+                  <img src={base64Image} alt="Uploaded" />
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
           <div className="text-left pb-10">
@@ -86,7 +124,7 @@ function HeroForm() {
             <div className="flex w-1/4">
               <button
                 type="button"
-                class="text-sm font-semibold leading-6 bg-[#DB4444] w-[100%]  text-[#ffffff] px-[16px] py-[15px] flex items-center justify-center"
+                class="text-sm font-semibold leading-6 bg-[#DB4444] w-[100%]  text-[#ffffff] px-[16px] py-[10px] flex items-center justify-center"
                 onClick={handleSubmit}
               >
                 Submit Feedback
