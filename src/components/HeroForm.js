@@ -34,7 +34,7 @@ function HeroForm() {
   };
 
   const handleSubmit = () => {
-    if (done) {
+    if (!done) {
       setOpen(true);
     } else {
       setOpenTwo(true);
