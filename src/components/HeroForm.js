@@ -9,6 +9,7 @@ function HeroForm() {
   const fileInputRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [openTwo, setOpenTwo] = useState(false);
+  const [openThree, setOpenThree] = useState(false);
   const [done, setDone] = useState("");
 
   const cancelButtonRef = useRef(null);
@@ -26,6 +27,10 @@ function HeroForm() {
       reader.onload = (event) => {
         const base64 = event.target.result;
         setBase64Image(base64);
+        setFormData({
+          ...formData,
+          ['productImage']: base64,
+        });
       };
       reader.readAsDataURL(file);
     }
@@ -34,6 +39,13 @@ function HeroForm() {
   const handleButtonClick = () => {
     // Trigger a click event on the hidden file input when the button is clicked
     fileInputRef.current.click();
+  };
+
+  const successOkay = () => {
+    setOpenTwo(false);
+    window.location.reload();
+
+
   };
 
   const [formData, setFormData] = useState({
@@ -54,42 +66,38 @@ function HeroForm() {
     });
   };
 
-  const reviewObj = {
-    productId: "650c057ccb05fd19fde0ec8b",
-    orderId: "11235",
-    productCategory: "Gaming",
-    reviewerName: "Ms. shanilka",
-    reviewerEmailAddress: "shanilka@gmail.com",
-    reviewContent:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    productImage:
-      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAtFBMVEVHcEwEUZcIqXQFbIwBoXEEUZcIqXQIqHQEWpMHqHMHonYHo3UIqXQFk3wHlXwGgoMFj3wHqXQFcIoEXJIFm3cIqXQHpnQGhIIHoXcHl3sIqXQFcYoFZ44IqXQHqXQFZY8Gn3gIqXQIqXQEUZcGfYUFdIkEWJMIp3UHo3YFaI0IqXQIqXQHqXQIqXQEV5UGdYcIqXQIn3cDeIgIqXQFYY8HlHwEUZYFVZUIqXQES5kETJgFXpF9nctUAAAAOHRSTlMA+/nzAv7J/fky+hWYEfLwB2X7twzud/j3+9JBgu3ozipcz/X3Ueyk/ZOT4bGe5CFabBzvmNLa2qzLAAcAAAEoSURBVCjPbZLZeoIwEIUDsi8CgoCAslhRqrbVbgm+/3t1skC8aG6Sbyb/nJmToMsZYzNf6YSM+8FHmn/bmRifLyg1YHcCayRkH5ehZr+u4aaRIvtKD8uFAshvdU8iQ8X482ojN6JIPiG2t6VA5KKQHfFyQVV+KlZ57dkh0pKoU2ek/t5hrHZRoiEk5LiKlTmg4NkQhwY/igkZ9dUGq0Xr0wQgHvDmhiGP7LTjACy3pS2eAosQAkjXujyOtOa4ZSq0sUdwbAQASFpAx/kLIKNe3yZgSjg0QRTwBf1Xqh9cWYmLZxw4SEC0y6zvq/sEiAGF8/Uz8GRJXzVzXJiYUUCpy1lZ2M4V3qp3OQN7KIcDcZnMielpGTBIQHwGNrQeHySA5Pch1pcv43/x+DXpbKYBoAAAAABJRU5ErkJggg==",
-  };
 
   const handleSubmit = () => {
-    // // Make a POST request to the API endpoint
-    // axios
-    //   .post(
-    //     "https://fakereview.azurewebsites.net/api/Review/add-review",
-    //     formData
-    //   )
-    //   .then((response) => {
-    //     // Handle a successful response, if needed
-    //     console.log("Data posted successfully:", response);
-    //     if (response.data.success) {
-    //       setOpenTwo(true);
-    //     } else {
-    //       setOpen(true);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     // Handle any errors
-    //     console.error("Error posting data:", error);
-    //   });
-
-    console.log("submitted image : ", base64Image);
-    console.log("submitted data : ", formData);
+    // Check if any field in formData is null or an empty string
+    const isAnyFieldEmpty = Object.values(formData).some((value) =>
+      value === null || value === ""
+    );
+  
+    if (isAnyFieldEmpty) {
+      setOpenThree(true); // Show the error message
+    } else {
+      // Make a POST request to the API endpoint
+      axios
+        .post(
+          "https://fakereview.azurewebsites.net/api/Review/add-review",
+          formData
+        )
+        .then((response) => {
+          // Handle a successful response, if needed
+          console.log("Data posted successfully:",);
+          if (response.data.success) {
+            setOpenTwo(true);
+          } else {
+            setOpen(true);
+          }
+        })
+        .catch((error) => {
+          // Handle any errors
+          console.error("Error posting data:", error);
+        });
+    }
   };
+  
 
   return (
     <>
@@ -114,9 +122,10 @@ function HeroForm() {
         </div>
         <div className="w-[60%]  p-10 shadow ">
           <div className="grid grid-cols-12 gap-2  pb-5">
-            <div class=" col-span-4">
+            <div className=" col-span-4">
               <input
                 id="email"
+                required
                 name="reviewerName"
                 value={formData.reviewerName}
                 onChange={handleChange}
@@ -343,10 +352,82 @@ function HeroForm() {
                     <button
                       type="button"
                       className="mt-3 inline-flex w-full justify-center rounded-md bg-green-700	 px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red sm:mt-0 sm:w-auto"
-                      onClick={() => setOpenTwo(false)}
+                      onClick={successOkay}
                       ref={cancelButtonRef}
                     >
                       OK
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
+
+
+      <Transition.Root show={openThree} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          initialFocus={cancelButtonRef}
+          onClose={setOpenThree}
+        >
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                  <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                    <div className="sm:flex sm:items-start">
+                      <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                        <ExclamationTriangleIcon
+                          className="h-6 w-6 text-red-600"
+                          aria-hidden="true"
+                        />
+                      </div>
+                      <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                        <Dialog.Title
+                          as="h3"
+                          className="text-base font-semibold leading-6 text-gray-900"
+                        >
+                          Submit Review
+                        </Dialog.Title>
+                        <div className="mt-2">
+                          <p className="text-sm text-gray-500">
+                            All fields are required!
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 px-4 py-3 flex justify-end	sm:px-6">
+                    <button
+                      type="button"
+                      className="mt-3 inline-flex w-full justify-center rounded-md bg-red-700	 px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-red sm:mt-0 sm:w-auto"
+                      onClick={() => setOpenThree(false)}
+                      ref={cancelButtonRef}
+                    >
+                      Try again
                     </button>
                   </div>
                 </Dialog.Panel>

@@ -10,6 +10,8 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 
+import Logo from "../assets/logo.png";
+
 const navigation = [
   { name: "Home", href: "#", current: true },
   { name: "Contact", href: "#", current: false },
@@ -60,7 +62,7 @@ export default function Navbar() {
                   <div className="flex flex-shrink-0 items-center">
                     <img
                       className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                      src={Logo}
                       alt="Your Company"
                     />
                     <div className=" font-bold text-2xl pl-5 mr-48">

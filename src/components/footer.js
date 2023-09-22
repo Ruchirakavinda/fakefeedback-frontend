@@ -1,6 +1,9 @@
 import React from "react";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
+import Logo from "../assets/logo.png";
+
+
 export default function Footer() {
   return (
     <footer className="bg-black text-center text-neutral-600 dark:text-neutral-200 lg:text-left ">
@@ -13,7 +16,7 @@ export default function Footer() {
               <div className="flex flex-shrink-0 items-center">
                 <img
                   className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                  src={Logo}
                   alt="Your Company"
                 />
                 <div className=" font-bold text-2xl pl-5 mr-48">Exclusive</div>

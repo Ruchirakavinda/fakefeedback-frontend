@@ -10,7 +10,7 @@ export default function Review() {
     // Make a GET request to the API endpoint
     axios
       .get(
-        `https://fakereview.azurewebsites.net/api/Review/get-all-review-by-product-id?productId=${productId}}`
+        `https://fakereview.azurewebsites.net/api/Review/get-all-review-by-product-id?productId=${productId}`
       )
       .then((response) => {
         // Handle a successful response
