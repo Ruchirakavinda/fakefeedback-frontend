@@ -46,7 +46,7 @@ function HeroForm() {
     <>
       <div className="mx-auto max-w-7xl flex w-full py-20 items-start border-b-2 border-[#DCDCDC]">
         <div className=" w-[40%]  pt-10  ">
-          <div className="text-[32px] w-[70%] text-left font-semibold leading-[40px] pb-5">
+          <div className="text-[32px] w-[90%] text-left font-semibold leading-[40px] pb-5">
             Havic HV G-92 Gamepad
           </div>
           <div className="text-left text-[14px] opacity-50 font-normal pb-5">
@@ -64,7 +64,7 @@ function HeroForm() {
           </div>
         </div>
         <div className="w-[60%]  p-10 shadow ">
-          <div className="grid grid-cols-12 gap-2  pb-10">
+          <div className="grid grid-cols-12 gap-2  pb-5">
             <div class=" col-span-4">
               <input
                 id="email"
@@ -72,7 +72,7 @@ function HeroForm() {
                 type="text"
                 autocomplete="given-name"
                 placeholder="Your Name *"
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 bg-[#F5F5F5] placeholder:text-[16px] placeholder:p-2"
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 bg-[#F5F5F5] p-2  placeholder:text-[16px] placeholder:p-2"
               />
             </div>
             <div className="col-span-4">
@@ -83,10 +83,25 @@ function HeroForm() {
                 type="email"
                 autocomplete="email"
                 placeholder="Your Email *"
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6 bg-[#F5F5F5]  placeholder:text-[16px] placeholder:p-2"
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6 bg-[#F5F5F5] p-2  placeholder:text-[16px] placeholder:p-2"
               />
             </div>
+
             <div className="col-span-4">
+              {" "}
+              <input
+                id="text"
+                name="Order ID"
+                type="text"
+                autocomplete="text"
+                placeholder="Order ID *"
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6 bg-[#F5F5F5] p-2 placeholder:text-[16px] placeholder:p-2"
+              />
+            </div>
+          </div>
+
+          <div className="pb-5 w-full flex justify-start gap-5">
+            <div className="w-1/4">
               <button
                 type="button"
                 class="text-sm font-semibold leading-6 bg-gray-500 w-[100%] h-[36px] text-[#ffffff]"
@@ -94,29 +109,32 @@ function HeroForm() {
               >
                 Upload Image
               </button>
-              <input
-                type="file"
-                accept="image/*"
-                style={{ display: "none" }}
-                ref={fileInputRef}
-                onChange={handleImageChange}
-              />
+            </div>
+            <div className="pb-3 ">
               {base64Image ? (
-                <div className="w-50 mt-5">
+                <div className="w-50">
                   <img src={base64Image} alt="Uploaded" />
                 </div>
               ) : (
                 <></>
               )}
             </div>
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              ref={fileInputRef}
+              onChange={handleImageChange}
+            />
           </div>
+
           <div className="text-left pb-10">
             <textarea
               id="about"
               name="about"
               rows="3"
               placeholder="Your Feedback"
-              className=" placeholder:text-[16px] placeholder:p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm bg-[#F5F5F5] placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              className=" placeholder:text-[16px] placeholder:p-2 block w-full rounded-md border-0  text-gray-900 p-2  shadow-sm bg-[#F5F5F5] placeholder:text-gray-400 sm:text-sm sm:leading-6"
             ></textarea>
           </div>
 
