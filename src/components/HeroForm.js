@@ -101,7 +101,7 @@ function HeroForm() {
           </div>
 
           <div className="pb-5 w-full flex justify-start gap-5">
-            <div className="w-1/4">
+            <div className="w-1/3">
               <button
                 type="button"
                 class="text-sm font-semibold leading-6 bg-gray-500 w-[100%] h-[36px] text-[#ffffff]"
@@ -112,7 +112,7 @@ function HeroForm() {
             </div>
             <div className="pb-3 ">
               {base64Image ? (
-                <div className="w-50">
+                <div className="w-20">
                   <img src={base64Image} alt="Uploaded" />
                 </div>
               ) : (
