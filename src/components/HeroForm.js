@@ -15,6 +15,7 @@ function HeroForm() {
   const cancelButtonRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [base64Image, setBase64Image] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const productId = "650c057ccb05fd19fde0ec8b";
   const productCategory = "Gaming";
 
@@ -88,6 +89,7 @@ function HeroForm() {
           if (response.data.success) {
             setOpenTwo(true);
           } else {
+            setErrorMessage(response.data.message)
             setOpen(true);
           }
         })
@@ -268,7 +270,7 @@ function HeroForm() {
                         </Dialog.Title>
                         <div className="mt-2">
                           <p className="text-sm text-gray-500">
-                            This review is likely suspicious !
+                            {errorMessage}
                           </p>
                         </div>
                       </div>
