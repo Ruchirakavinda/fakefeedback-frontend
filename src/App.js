@@ -11,7 +11,6 @@ function App() {
       <Navbar />
       <HeroForm />
       <Review />
-      <Review />
       <Footer />
     </div>
   );

@@ -1,5 +1,6 @@
 import { React, Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import axios from "axios";
 import {
   ExclamationTriangleIcon,
   ShieldCheckIcon,
@@ -8,11 +9,13 @@ function HeroForm() {
   const fileInputRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [openTwo, setOpenTwo] = useState(false);
-  const [done, setDone] = useState(true);
+  const [done, setDone] = useState("");
 
   const cancelButtonRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [base64Image, setBase64Image] = useState("");
+  const productId = "650c057ccb05fd19fde0ec8b";
+  const productCategory = "Gaming";
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -33,13 +36,59 @@ function HeroForm() {
     fileInputRef.current.click();
   };
 
+  const [formData, setFormData] = useState({
+    productId: productId,
+    orderId: "",
+    productCategory: productCategory,
+    reviewerName: "",
+    reviewerEmailAddress: "",
+    reviewContent: "",
+    productImage: base64Image,
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const reviewObj = {
+    productId: "650c057ccb05fd19fde0ec8b",
+    orderId: "11235",
+    productCategory: "Gaming",
+    reviewerName: "Ms. shanilka",
+    reviewerEmailAddress: "shanilka@gmail.com",
+    reviewContent:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    productImage:
+      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAtFBMVEVHcEwEUZcIqXQFbIwBoXEEUZcIqXQIqHQEWpMHqHMHonYHo3UIqXQFk3wHlXwGgoMFj3wHqXQFcIoEXJIFm3cIqXQHpnQGhIIHoXcHl3sIqXQFcYoFZ44IqXQHqXQFZY8Gn3gIqXQIqXQEUZcGfYUFdIkEWJMIp3UHo3YFaI0IqXQIqXQHqXQIqXQEV5UGdYcIqXQIn3cDeIgIqXQFYY8HlHwEUZYFVZUIqXQES5kETJgFXpF9nctUAAAAOHRSTlMA+/nzAv7J/fky+hWYEfLwB2X7twzud/j3+9JBgu3ozipcz/X3Ueyk/ZOT4bGe5CFabBzvmNLa2qzLAAcAAAEoSURBVCjPbZLZeoIwEIUDsi8CgoCAslhRqrbVbgm+/3t1skC8aG6Sbyb/nJmToMsZYzNf6YSM+8FHmn/bmRifLyg1YHcCayRkH5ehZr+u4aaRIvtKD8uFAshvdU8iQ8X482ojN6JIPiG2t6VA5KKQHfFyQVV+KlZ57dkh0pKoU2ek/t5hrHZRoiEk5LiKlTmg4NkQhwY/igkZ9dUGq0Xr0wQgHvDmhiGP7LTjACy3pS2eAosQAkjXujyOtOa4ZSq0sUdwbAQASFpAx/kLIKNe3yZgSjg0QRTwBf1Xqh9cWYmLZxw4SEC0y6zvq/sEiAGF8/Uz8GRJXzVzXJiYUUCpy1lZ2M4V3qp3OQN7KIcDcZnMielpGTBIQHwGNrQeHySA5Pch1pcv43/x+DXpbKYBoAAAAABJRU5ErkJggg==",
+  };
+
   const handleSubmit = () => {
-    if (!done) {
-      setOpen(true);
-    } else {
-      setOpenTwo(true);
-    }
-    console.log("image string : ", base64Image);
+    // // Make a POST request to the API endpoint
+    // axios
+    //   .post(
+    //     "https://fakereview.azurewebsites.net/api/Review/add-review",
+    //     formData
+    //   )
+    //   .then((response) => {
+    //     // Handle a successful response, if needed
+    //     console.log("Data posted successfully:", response);
+    //     if (response.data.success) {
+    //       setOpenTwo(true);
+    //     } else {
+    //       setOpen(true);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     // Handle any errors
+    //     console.error("Error posting data:", error);
+    //   });
+
+    console.log("submitted image : ", base64Image);
+    console.log("submitted data : ", formData);
   };
 
   return (
@@ -68,7 +117,9 @@ function HeroForm() {
             <div class=" col-span-4">
               <input
                 id="email"
-                name="name"
+                name="reviewerName"
+                value={formData.reviewerName}
+                onChange={handleChange}
                 type="text"
                 autocomplete="given-name"
                 placeholder="Your Name *"
@@ -79,7 +130,9 @@ function HeroForm() {
               {" "}
               <input
                 id="email"
-                name="email"
+                name="reviewerEmailAddress"
+                value={formData.reviewerEmailAddress}
+                onChange={handleChange}
                 type="email"
                 autocomplete="email"
                 placeholder="Your Email *"
@@ -91,7 +144,9 @@ function HeroForm() {
               {" "}
               <input
                 id="text"
-                name="Order ID"
+                name="orderId"
+                value={formData.orderId}
+                onChange={handleChange}
                 type="text"
                 autocomplete="text"
                 placeholder="Order ID *"
@@ -130,8 +185,10 @@ function HeroForm() {
 
           <div className="text-left pb-10">
             <textarea
-              id="about"
-              name="about"
+              id="reviewContent"
+              name="reviewContent"
+              value={formData.reviewContent}
+              onChange={handleChange}
               rows="3"
               placeholder="Your Feedback"
               className=" placeholder:text-[16px] placeholder:p-2 block w-full rounded-md border-0  text-gray-900 p-2  shadow-sm bg-[#F5F5F5] placeholder:text-gray-400 sm:text-sm sm:leading-6"
