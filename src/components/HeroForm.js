@@ -30,7 +30,7 @@ function HeroForm() {
         setBase64Image(base64);
         setFormData({
           ...formData,
-          ['productImage']: base64,
+          ["productImage"]: base64,
         });
       };
       reader.readAsDataURL(file);
@@ -45,8 +45,6 @@ function HeroForm() {
   const successOkay = () => {
     setOpenTwo(false);
     window.location.reload();
-
-
   };
 
   const [formData, setFormData] = useState({
@@ -67,13 +65,12 @@ function HeroForm() {
     });
   };
 
-
   const handleSubmit = () => {
     // Check if any field in formData is null or an empty string
-    const isAnyFieldEmpty = Object.values(formData).some((value) =>
-      value === null || value === ""
+    const isAnyFieldEmpty = Object.values(formData).some(
+      (value) => value === null || value === ""
     );
-  
+
     if (isAnyFieldEmpty) {
       setOpenThree(true); // Show the error message
     } else {
@@ -85,11 +82,11 @@ function HeroForm() {
         )
         .then((response) => {
           // Handle a successful response, if needed
-          console.log("Data posted successfully:",);
+          console.log("Data posted successfully:");
           if (response.data.success) {
             setOpenTwo(true);
           } else {
-            setErrorMessage(response.data.message)
+            setErrorMessage(response.data.message);
             setOpen(true);
           }
         })
@@ -98,8 +95,8 @@ function HeroForm() {
           console.error("Error posting data:", error);
         });
     }
+    console.log(base64Image);
   };
-  
 
   return (
     <>
@@ -366,7 +363,6 @@ function HeroForm() {
           </div>
         </Dialog>
       </Transition.Root>
-
 
       <Transition.Root show={openThree} as={Fragment}>
         <Dialog
